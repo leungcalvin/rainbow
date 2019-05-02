@@ -1,0 +1,51 @@
+type: config
+log_level: DEBUG 
+samples_per_data_set: 65536 
+buffer_depth: 20
+num_elements: 2048
+base_dir: /home/masuilab/tmp
+block_size: 2
+cpu_affinity: []
+
+# Pool
+main_pool:
+  kotekan_metadata_pool: chimeMetadata
+  num_metadata_objects: 30 * buffer_depth
+
+vis_pool:
+  kotekan_metadata_pool: visMetadata
+  num_metadata_objects: 30 * buffer_depth
+
+fakenetwork:
+  kotekan_stage: testDataGen
+  network_out_buf: fakenetwork_buf2
+  #num_frames: 30 # comment this out to go forever
+  stage_name: fakenetwork
+  type: tpluse
+
+basebandReadout_test:
+  max_dump_samples: 400000
+  num_frames_buffer: 10
+  base_dir: /home/masuilab/cpu-record-config
+  write_throttle: 0
+  kotekan_stage: basebandReadout
+  in_buf: fakenetwork_buf2
+
+fakenetwork_buf2:
+  frame_size: samples_per_data_set * num_elements* num_local_freq * num_data_sets
+  kotekan_buffer: standard
+  metadata_pool: main_pool
+  num_frames: buffer_depth
+
+
+max_dump_samples: 400000
+num_data_sets: 1
+num_frames_buffer: 18
+#num_gpu_frames: 64
+num_local_freq: 1
+#rest_mode: step
+stream_id: 0
+#total_frames: 30
+type: tpluse
+value: 153
+
