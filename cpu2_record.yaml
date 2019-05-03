@@ -26,7 +26,8 @@ block_size: 2
 baseband_buffer_depth: 100 # 10 frames * 1 buffer = 1% of CPU (1x Intel Xeon 4116)
 cpu_affinity: [] #[2,3,4,5,6,7]
 #num_disks: 10
-instrument_name: lab_test
+instrument_name: pathfinder
+num_local_freqs: 8 # frequencies PER STREAM
 
 # Pool
 main_pool:
