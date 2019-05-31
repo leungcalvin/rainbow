@@ -3,7 +3,7 @@
 # cpu_record_multifreq.yaml
 #
 # A config which allows for the recording of one
-# stream consisting of 8 frequencies of testDataGen, instead of 
+# stream consisting of 8 frequencies of testDataGen, instead of 1 frequency
 # ADC data from ICEBoards (modified from adc_record.yaml)
 #
 # Author: Calvin Leung
@@ -106,9 +106,10 @@ gen_data:
     value: 153
     gen_data_0:
         kotekan_stage: testDataGen
-        out_buf: gpu_input_buffer_0
         network_out_buf: gpu_input_buffer_0
+        out_buf: gpu_input_buffer_0
         lost_samples_buf: lost_samples_buffer_0
+        stream_id: 2
 
     #zero_samples:
     #    kotekan_stage: zeroSamples

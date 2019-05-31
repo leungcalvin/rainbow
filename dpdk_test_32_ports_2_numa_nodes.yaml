@@ -15,11 +15,12 @@ log_level: DEBUG
 
 buffer_depth: 16
 baseband_buffer_depth: 20 # Calvin: this is a guess from cpu_record.yaml
-samples_per_data_set: 16384 # Calvin: 16384 to speed things up Andre: 49152
+samples_per_data_set: 2048 # Calvin: 16384 to speed things up Andre: 49152
 num_elements: 128  #Andre: 128
-num_local_freq: 4 #Calvin: 4 to speed things up Andre: 128
+num_local_freq: 1 #Calvin: 4 to speed things up Andre: 128
 
-cpu_affinity: [4,20,5,21,12,18,13,29] #[0,1,2,3,4,5,6,7] #Andre: [4, 20, 5, 21, 12, 18, 13, 29] Did Andre mean 19 for the last one?
+#cpu_affinity prefers a disjoint set of cores from lcore_cpu_map in dpdk.
+cpu_affinity: [4,16,5,17,12,18,13,19] #[0,1,2,3,4,5,6,7] #Andre: [4, 20, 5, 21, 12, 18, 13, 29] Did Andre mean 19 for the last one?
 
 # Pool
 main_pool:
@@ -237,8 +238,8 @@ dpdk:
     # Format is index = lcore, value = cpu core
     #lcore_cpu_map: [0,16,1,17,2,18,3,19,8,24,9,25,10,26,11,27]
     lcore_cpu_map: [0,12,1,13,2,14,3,15,8,20,9,21,10,22,11,23] #Calvin's guess for Intel Xeon 4116, which has 12 physical (24 virtual=logical cores)
-    num_mem_channels: 1
-    master_lcore_cpu: 2 # two logical=virtual cores per physical core
+    num_mem_channels: 4 # i.e...how many RAM chips?
+    master_lcore_cpu: 2 # which core index is the master?
     fpga_packet_size: 4680
     alignment: samples_per_data_set
     mbuf_cache_size: 250
