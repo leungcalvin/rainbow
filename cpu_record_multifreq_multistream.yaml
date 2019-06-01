@@ -2,10 +2,11 @@
 #
 # cpu_record_multifreq_multistream.yaml
 #
-# A config which allows for the recording of one
-# stream consisting of 8 frequencies of testDataGen, instead of 1 frequency
-# Many different stream IDs
-#
+# A config which allows for the recording of 16 streams
+# consisting of 8 frequencies of testDataGen, instead of 1 frequency
+# Total of 16*8 = 128 frequencies handled
+# 65536 samples per data set, 256 elements, 500 baseband_buffer depth -> 128GB memory + 800% CPU
+# Segfaults if there are more than
 # Author: Calvin Leung
 # Loading
 ##########################################
@@ -24,8 +25,8 @@ buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old da
 num_elements: 256 #256 PF correlator inputs; change back to 2048 (CHIME)
 base_dir: /home/masuilab/tmp/
 block_size: 2 
-baseband_buffer_depth: 500 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
-cpu_affinity: [0,1,2,3,4,5,6,7]
+baseband_buffer_depth: 100 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
+cpu_affinity: [0,1,2,3,4,5,6,7,8,9,10,11]
 master_lcore_cpu: [0]
 #num_disks: 10
 #instrument_name: pathfinder
@@ -243,49 +244,49 @@ gen_data:
         network_out_buf: gpu_input_buffer_8
         out_buf: gpu_input_buffer_8
         lost_samples_buf: lost_samples_buffer_8
-        stream_id: 8
+        stream_id: 16
     gen_data_9:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_9
         out_buf: gpu_input_buffer_9
         lost_samples_buf: lost_samples_buffer_9
-        stream_id: 9
+        stream_id: 17
     gen_data_10:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_10
         out_buf: gpu_input_buffer_10
         lost_samples_buf: lost_samples_buffer_10
-        stream_id: 10
+        stream_id: 18
     gen_data_11:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_11 
         out_buf: gpu_input_buffer_11
         lost_samples_buf: lost_samples_buffer_11
-        stream_id: 11
+        stream_id: 19
     gen_data_12:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_12
         out_buf: gpu_input_buffer_12
         lost_samples_buf: lost_samples_buffer_12
-        stream_id: 12
+        stream_id: 20
     gen_data_13:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_13
         out_buf: gpu_input_buffer_13
         lost_samples_buf: lost_samples_buffer_13
-        stream_id: 13
+        stream_id: 21
     gen_data_14:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_14
         out_buf: gpu_input_buffer_14
         lost_samples_buf: lost_samples_buffer_14
-        stream_id: 14
+        stream_id: 22
     gen_data_15:
         kotekan_stage: testDataGen
         network_out_buf: gpu_input_buffer_15
         out_buf: gpu_input_buffer_15
         lost_samples_buf: lost_samples_buffer_15
-        stream_id: 15
+        stream_id: 23
 
     #zero_samples:
     #    kotekan_stage: zeroSamples
