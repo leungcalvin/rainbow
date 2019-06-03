@@ -35,7 +35,7 @@ num_local_freq: 8 # number of frequencies PER STREAM. 8 for new pathfinder, 1 fo
 # Pool
 main_pool:
     kotekan_metadata_pool: chimeMetadata
-    num_metadata_objects: 30 * buffer_depth + 5 * baseband_buffer_depth
+    num_metadata_objects: 16* (30 * buffer_depth + 5 * baseband_buffer_depth) # for 16 streams
 
 # Buffers
 gpu_input_buffers:
