@@ -18,7 +18,7 @@ log_level: DEBUG
 # Note that for ADC mode the "samples" variable
 # doesn't really make sense here.  Since there are
 # 2048 ADC samples in the 2.56 us the other modes consider to be a "sample"
-samples_per_data_set: 65536
+samples_per_data_set: 2048
 buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
 num_elements: 256 #correlator inputs; change back to 2048
 base_dir: /home/masuilab/tmp/
