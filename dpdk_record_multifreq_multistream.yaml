@@ -22,14 +22,20 @@ num_elements: 256 #correlator inputs; change back to 2048
 num_local_freq: 8
 base_dir: /home/masuilab/tmp
 # block_size: 2
-cpu_affinity: [4,5,6,7]
+
+# OPTION 1: all 16 streams, 1 stream/lcore
+cpu_affinity: [12,13,14,15] #[4,5,6,7]
+# OPTION 2: first8 streams, 1 stream/lcore
+# cpu_affinity: [0,1,2,3]
+# OPTION 3: last 8 streams, 1 stream/lcore
+# cpu_affinity: [4,5,6,7]
 #num_disks: 10
 instrument_name: lab_test
 
 # Pool
 main_pool:
     kotekan_metadata_pool: chimeMetadata
-    num_metadata_objects: 128 * buffer_depth #30 * buffer_depth + 9 * baseband_buffer_depth
+    num_metadata_objects: 16 * buffer_depth + 9 * baseband_buffer_depth
 
 # Buffers
 gpu_input_buffers:
@@ -61,6 +67,27 @@ gpu_input_buffers:
         kotekan_buffer: standard
         numa_node: 0
     gpu_input_buffer_8:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_9:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_10:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_11:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_12:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_13:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_14:
+        kotekan_buffer: standard
+        numa_node: 0
+    gpu_input_buffer_15:
         kotekan_buffer: standard
         numa_node: 0
 
@@ -95,6 +122,27 @@ lost_samples_buffers:
     lost_samples_buffer_8:
         kotekan_buffer: standard
         numa_node: 0
+    lost_samples_buffer_9:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_10:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_11:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_12:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_13:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_14:
+        kotekan_buffer: standard
+        numa_node: 0
+    lost_samples_buffer_15:
+        kotekan_buffer: standard
+        numa_node: 0
 
 # Stages
 
@@ -103,39 +151,45 @@ lost_samples_buffers:
 
 dpdk:
     kotekan_stage: dpdkCore
-    # Format is index = lcore, value = cpu core
-    # SEVERAL OPTIONS FOR LCORE_CPU_MAP
-    # OPTION 1: 1 stream/lcore, 16 streams
-    # lcore_cpu_map: [0,1,2,3,8,9,10,11,0,1,2,3,8,9,10,11] 
-    # OPTION 2: 1 stream/lcore, first 8 streams
-    lcore_cpu_map: [0,1,2,3,8,9,10,11,4] 
     num_mem_channels: 4
-    master_lcore_cpu: 8
     fpga_packet_size: 2376
     samples_per_packet: 1
     alignment: samples_per_data_set * num_local_freq 
     mbuf_cache_size: 250
+    master_lcore_cpu: 2
+    # Format is index = lcore, value = cpu core
+    # SEVERAL OPTIONS FOR LCORE_CPU_MAP
+    # OPTION 1: 1 stream/lcore, 16 streams
+    lcore_cpu_map: [0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3] 
+    cpu_affinity: [16,17,18,19] #4,5,6,7]
+    # OPTION 2: 1 stream/lcore, first 8 streams
+    # lcore_cpu_map: [0,1,2,3,4,5,6,7,8] 8% in all channels, best so far
+    # lcore_cpu_map: [4,5,6,7,8,9,10,11,0] # trial
+    # cpu_affinity: [0,1,2,3]
+    # OPTION 3: 1 stream/lcore, last  8 streams
+    # lcore_cpu_map: [0,1,2,3,8,9,10,11,4] 
+    # master_lcore_cpu: 4
     # Format is index = lcore, value = array of port IDs
     # so [[0,1],[2,3]] maps lcore 0 to service ports 0 and 1,
     # and lcore 1 to service ports 2 and 3.
     # OPTION 1: 
-    # lcore_port_map: # 1 stream/lcore, 16 streams
-    #     - [0]
-    #     - [1]
-    #     - [2]
-    #     - [3]
-    #     - [4]
-    #     - [5]
-    #     - [6]
-    #     - [7]
-    #     - [8]
-    #     - [9]
-    #     - [10]
-    #     - [11]
-    #     - [12]
-    #     - [13]
-    #     - [14]
-    #     - [15]
+    lcore_port_map: # 1 stream/lcore, 16 streams
+        - [0]
+        - [1]
+        - [2]
+        - [3]
+        - [4]
+        - [5]
+        - [6]
+        - [7]
+        - [8]
+        - [9]
+        - [10]
+        - [11]
+        - [12]
+        - [13]
+        - [14]
+        - [15]
     # lcore_port_map: #1 stream/lcore, first 8 streams
     #     - [0]
     #     - [1]
@@ -146,27 +200,27 @@ dpdk:
     #     - [6]
     #     - [7]
     #     - [8,9,10,11,12,13,14,15]
-    lcore_port_map: # 1 stream/lcore,last 8 streams
-        - [0,1,2,3,4,5,6,7]
-        - [8]
-        - [9]
-        - [10]
-        - [11]
-        - [12]
-        - [13]
-        - [14]
-        - [15]
+    # lcore_port_map: # 1 stream/lcore,last 8 streams
+    #     - [0,1,2,3,4,5,6,7]
+    #     - [8]
+    #     - [9]
+    #     - [10]
+    #     - [11]
+    #     - [12]
+    #     - [13]
+    #     - [14]
+    #     - [15]
     # One handler must be given per port on the system.
     # 0-7th: Second ICEBoard, 8-15th: First ICEBoard.
     handlers:
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
+        #- dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_0
           lost_samples_buf: lost_samples_buffer_0
@@ -191,6 +245,30 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_7
           lost_samples_buf: lost_samples_buffer_7
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_8
+          lost_samples_buf: lost_samples_buffer_8
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_9
+          lost_samples_buf: lost_samples_buffer_9
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_10
+          lost_samples_buf: lost_samples_buffer_10
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_11
+          lost_samples_buf: lost_samples_buffer_11
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_12
+          lost_samples_buf: lost_samples_buffer_12
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_13
+          lost_samples_buf: lost_samples_buffer_13
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_14
+          lost_samples_buf: lost_samples_buffer_14
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_15
+          lost_samples_buf: lost_samples_buffer_15
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 # gen_data:
@@ -240,6 +318,34 @@ zero_samples:
         kotekan_stage: zeroSamples
         out_buf: gpu_input_buffer_8
         lost_samples_buf: lost_samples_buffer_8
+    zero_samples_9:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_9
+        lost_samples_buf: lost_samples_buffer_9
+    zero_samples_10:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_10
+        lost_samples_buf: lost_samples_buffer_10
+    zero_samples_11:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_11
+        lost_samples_buf: lost_samples_buffer_11
+    zero_samples_12:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_12
+        lost_samples_buf: lost_samples_buffer_12
+    zero_samples_13:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_13
+        lost_samples_buf: lost_samples_buffer_13
+    zero_samples_14:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_14
+        lost_samples_buf: lost_samples_buffer_14
+    zero_samples_15:
+        kotekan_stage: zeroSamples
+        out_buf: gpu_input_buffer_15
+        lost_samples_buf: lost_samples_buffer_15
 
 baseband:
     max_dump_samples: 4000 #400000
