@@ -20,12 +20,12 @@ log_level: DEBUG
 # Note that for ADC mode the "samples" variable
 # doesn't really make sense here.  Since there are
 # 2048 ADC samples in the 2.56 us the other modes consider to be a "sample"
-samples_per_data_set: 65536
+samples_per_data_set: 390625
 buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
 num_elements: 256 #256 PF correlator inputs; change back to 2048 (CHIME)
 base_dir: /home/masuilab/tmp/
 block_size: 2 
-baseband_buffer_depth: 100 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
+baseband_buffer_depth: 40 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
 cpu_affinity: [0,1,2,3,4,5,6,7,8,9,10,11]
 master_lcore_cpu: [0]
 #num_disks: 10
@@ -40,7 +40,7 @@ main_pool:
 # Buffers
 gpu_input_buffers:
     num_frames: baseband_buffer_depth
-    frame_size: samples_per_data_set * num_elements
+    frame_size: samples_per_data_set * num_elements * num_local_freq
     metadata_pool: main_pool
     gpu_input_buffer_0:
         kotekan_buffer: standard
@@ -189,7 +189,7 @@ lost_samples_buffer:
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 gen_data:
-    type: const
+    type: tpluseplusf
     value: 1337
     gen_data_0:
         kotekan_stage: testDataGen
@@ -295,7 +295,7 @@ gen_data:
     #    zero_value: 0
 
 baseband:
-    max_dump_samples: 4000
+    max_dump_samples: 400000
     num_frames_buffer: baseband_buffer_depth - 10
     base_dir: /home/masuilab/cpu-record-config/
     write_throttle: 0
