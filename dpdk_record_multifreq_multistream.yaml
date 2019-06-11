@@ -172,7 +172,7 @@ dpdk:
     # lcore_cpu_map: [0,1,2,3,8,9,10,11,4] 
     # master_lcore_cpu: 4
     # OPTION 4: 2 streams/lcore
-    lcore_cpu_map: [0,8,1,9,2,10,3,11] #[0,8,1,9,2,10,3,11]
+    lcore_cpu_map: [0,4,1,5,2,6,3,7] #[0,8,1,9,2,10,3,11]
     # Format is index = lcore, value = array of port IDs
     # so [[0,1],[2,3]] maps lcore 0 to service ports 0 and 1,
     # and lcore 1 to service ports 2 and 3.
@@ -279,26 +279,27 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_11
           lost_samples_buf: lost_samples_buffer_11
-        - dpdk_handler: iceBoardStandard
-          out_buf: gpu_input_buffer_12
-          lost_samples_buf: lost_samples_buffer_12
+        - dpdk_handler: none
           # - dpdk_handler: iceBoardStandard
-          # - out_buf: gpu_input_buffer_13
-          # - lost_samples_buf: lost_samples_buffer_13
-          #        - dpdk_handler: iceBoardStandard
-          #          out_buf: gpu_input_buffer_14
-          #          lost_samples_buf: lost_samples_buffer_14
-          #        - dpdk_handler: iceBoardStandard
-          #          out_buf: gpu_input_buffer_15
-          #          lost_samples_buf: lost_samples_buffer_15
-          #         - dpdk_handler: none
+          # - out_buf: gpu_input_buffer_12
+          # - lost_samples_buf: lost_samples_buffer_12
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_13
+          lost_samples_buf: lost_samples_buffer_13
+        - dpdk_handler: none
+          # - dpdk_handler: iceBoardStandard
+          # - out_buf: gpu_input_buffer_14
+          # - lost_samples_buf: lost_samples_buffer_14
+        - dpdk_handler: iceBoardStandard
+          out_buf: gpu_input_buffer_15
+          lost_samples_buf: lost_samples_buffer_15
           #         - dpdk_handler: none
           #        - dpdk_handler: none
           #        - dpdk_handler: none
-        - dpdk_handler: none
-          # - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
+          #         - dpdk_handler: none
+          #         - dpdk_handler: none
+          #         - dpdk_handler: none
+          #         - dpdk_handler: none
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 # gen_data:
@@ -400,12 +401,36 @@ baseband:
     baseband_5:
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_5
-    baseband_6:
+    baseband_6: 
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_6
     baseband_7:
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_7
+        #     baseband_8:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_8
+        #     baseband_9:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_9
+        #     baseband_10:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_10
+        #     baseband_11:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_11
+        #     baseband_12:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_12
+        #     baseband_13:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_13
+        #     baseband_14:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_14
+        #     baseband_15:
+        #         kotekan_stage: basebandReadout
+        #         in_buf: gpu_input_buffer_15
 
         # hex_dump:
         #     kotekan_stage: hexDump
