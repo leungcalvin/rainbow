@@ -20,7 +20,7 @@ log_level: DEBUG
 # Note that for ADC mode the "samples" variable
 # doesn't really make sense here.  Since there are
 # 2048 ADC samples in the 2.56 us the other modes consider to be a "sample"
-samples_per_data_set: 390625
+samples_per_data_set: 49152
 buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
 num_elements: 256 #256 PF correlator inputs; change back to 2048 (CHIME)
 base_dir: /home/masuilab/tmp/
@@ -66,30 +66,30 @@ gpu_input_buffers:
     gpu_input_buffer_7:
         kotekan_buffer: standard
         numa_node: 0
-    gpu_input_buffer_8:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_9:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_10:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_11:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_12:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_13:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_14:
-        kotekan_buffer: standard
-        numa_node: 0
-    gpu_input_buffer_15:
-        kotekan_buffer: standard
-        numa_node: 0
+        #    gpu_input_buffer_8:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_9:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_10:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_11:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_12:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_13:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_14:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    gpu_input_buffer_15:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
 
 lost_samples_buffer:
     num_frames: baseband_buffer_depth
@@ -119,30 +119,30 @@ lost_samples_buffer:
     lost_samples_buffer_7:
         kotekan_buffer: standard
         numa_node: 0
-    lost_samples_buffer_8:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_9:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_10:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_11:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_12:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_13:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_14:
-        kotekan_buffer: standard
-        numa_node: 0
-    lost_samples_buffer_15:
-        kotekan_buffer: standard
-        numa_node: 0
+        #    lost_samples_buffer_8:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_9:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_10:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_11:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_12:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_13:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_14:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
+        #    lost_samples_buffer_15:
+        #        kotekan_buffer: standard
+        #        numa_node: 0
 
 # Stages
 
@@ -239,54 +239,54 @@ gen_data:
         out_buf: gpu_input_buffer_7
         lost_samples_buf: lost_samples_buffer_7
         stream_id: 7
-    gen_data_8:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_8
-        out_buf: gpu_input_buffer_8
-        lost_samples_buf: lost_samples_buffer_8
-        stream_id: 16
-    gen_data_9:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_9
-        out_buf: gpu_input_buffer_9
-        lost_samples_buf: lost_samples_buffer_9
-        stream_id: 17
-    gen_data_10:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_10
-        out_buf: gpu_input_buffer_10
-        lost_samples_buf: lost_samples_buffer_10
-        stream_id: 18
-    gen_data_11:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_11 
-        out_buf: gpu_input_buffer_11
-        lost_samples_buf: lost_samples_buffer_11
-        stream_id: 19
-    gen_data_12:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_12
-        out_buf: gpu_input_buffer_12
-        lost_samples_buf: lost_samples_buffer_12
-        stream_id: 20
-    gen_data_13:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_13
-        out_buf: gpu_input_buffer_13
-        lost_samples_buf: lost_samples_buffer_13
-        stream_id: 21
-    gen_data_14:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_14
-        out_buf: gpu_input_buffer_14
-        lost_samples_buf: lost_samples_buffer_14
-        stream_id: 22
-    gen_data_15:
-        kotekan_stage: testDataGen
-        network_out_buf: gpu_input_buffer_15
-        out_buf: gpu_input_buffer_15
-        lost_samples_buf: lost_samples_buffer_15
-        stream_id: 23
+        #    gen_data_8:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_8
+        #        out_buf: gpu_input_buffer_8
+        #        lost_samples_buf: lost_samples_buffer_8
+        #        stream_id: 16
+        #    gen_data_9:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_9
+        #        out_buf: gpu_input_buffer_9
+        #        lost_samples_buf: lost_samples_buffer_9
+        #        stream_id: 17
+        #    gen_data_10:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_10
+        #        out_buf: gpu_input_buffer_10
+        #        lost_samples_buf: lost_samples_buffer_10
+        #        stream_id: 18
+        #    gen_data_11:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_11 
+        #        out_buf: gpu_input_buffer_11
+        #        lost_samples_buf: lost_samples_buffer_11
+        #        stream_id: 19
+        #    gen_data_12:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_12
+        #        out_buf: gpu_input_buffer_12
+        #        lost_samples_buf: lost_samples_buffer_12
+        #        stream_id: 20
+        #    gen_data_13:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_13
+        #        out_buf: gpu_input_buffer_13
+        #        lost_samples_buf: lost_samples_buffer_13
+        #        stream_id: 21
+        #    gen_data_14:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_14
+        #        out_buf: gpu_input_buffer_14
+        #        lost_samples_buf: lost_samples_buffer_14
+        #        stream_id: 22
+        #    gen_data_15:
+        #        kotekan_stage: testDataGen
+        #        network_out_buf: gpu_input_buffer_15
+        #        out_buf: gpu_input_buffer_15
+        #        lost_samples_buf: lost_samples_buffer_15
+        #        stream_id: 23
 
     #zero_samples:
     #    kotekan_stage: zeroSamples
@@ -323,30 +323,30 @@ baseband:
     baseband_7:
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_7
-    baseband_8:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_8
-    baseband_9:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_9
-    baseband_10:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_10
-    baseband_11:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_11
-    baseband_12:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_12
-    baseband_13:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_13
-    baseband_14:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_14
-    baseband_15:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_15
+        #    baseband_8:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_8
+        #    baseband_9:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_9
+        #    baseband_10:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_10
+        #    baseband_11:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_11
+        #    baseband_12:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_12
+        #    baseband_13:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_13
+        #    baseband_14:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_14
+        #    baseband_15:
+        #        kotekan_stage: basebandReadout
+        #        in_buf: gpu_input_buffer_15
 
 #raw_file_write:
 #    kotekan_stage: nDiskFileWrite
