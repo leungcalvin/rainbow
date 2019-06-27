@@ -154,7 +154,7 @@ lost_samples_buffers:
 
 dpdk:
     kotekan_stage: dpdkCore
-    num_mem_channels: 4
+    num_mem_channels: 6
     samples_per_packet: 2
     fpga_packet_size: 4680 #2376 * samples_per_packet
     alignment: samples_per_data_set * num_local_freq 
@@ -180,7 +180,7 @@ dpdk:
     # Format is index = lcore, value = array of port IDs
     # so [[0,1],[2,3]] maps lcore 0 to service ports 0 and 1,
     # and lcore 1 to service ports 2 and 3.
-    # OPTION 1: 
+    # # OPTION 1: 
     lcore_port_map: # 1 stream/lcore, 16 streams
          - [0]
          - [1]
