@@ -13,7 +13,7 @@ type: config
 # Note DEBUG and DEBUG2 require a build with (-DCMAKE_BUILD_TYPE=Debug)
 log_level: DEBUG
 
-baseband_buffer_depth: 200 # # keep at least N-5 frames in buffer before overwriting old data # 40 is sufficient for testing, 200 to use all the RAM
+baseband_buffer_depth: 240 # # keep at least N-5 frames in buffer before overwriting old data # 40 is sufficient for testing, 230 to use all the RAM
 
 samples_per_data_set: 65536 # keep at 65536
 num_elements: 256 #correlator inputs; change back to 2048
@@ -567,8 +567,8 @@ zero_samples:
 
 baseband:
     max_dump_samples: 400000
-    num_frames_buffer: baseband_buffer_depth - 4
-    base_dir: /mnt/frb-baseband/kiyo_pathfinder/
+    num_frames_buffer: baseband_buffer_depth - 8
+    base_dir: /mnt/frb-baseband/pathfinder/
     write_throttle: 200 # prevents kotekan crashes when writing long dumps
     baseband_0:
         kotekan_stage: basebandReadout
