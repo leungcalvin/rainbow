@@ -1,0 +1,130 @@
+##########################################
+#
+# cpu_record.yaml
+#
+# A config which allows for the recording of one
+# stream of testDataGen, instead of 
+# ADC data from ICEBoards (modified from adc_record.yaml)
+#
+# Author: Calvin Leung
+##########################################
+---
+type: config
+# Logging level can be one of:
+# OFF, ERROR, WARN, INFO, DEBUG, DEBUG2 (case insensitive)
+# Note DEBUG and DEBUG2 require a build with (-DCMAKE_BUILD_TYPE=Debug)
+log_level: DEBUG
+
+# Note that for ADC mode the "samples" variable
+# doesn't really make sense here.  Since there are
+# 2048 ADC samples in the 2.56 us the other modes consider to be a "sample"
+samples_per_data_set: 65536
+buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
+num_elements: 16 #correlator inputs; change back to 2048
+block_size: 2 
+baseband_buffer_depth: 50 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
+cpu_affinity: [2,3,4,5,6,7]
+#num_disks: 10
+#instrument_name: chime
+num_local_freq: 128 # number of frequencies PER STREAM. 8 for new pathfinder, 1 for current CHIME
+
+# Pool
+main_pool:
+    kotekan_metadata_pool: chimeMetadata
+    num_metadata_objects: 30 * buffer_depth + 5 * baseband_buffer_depth
+
+# Buffers
+gpu_input_buffers:
+    num_frames: baseband_buffer_depth
+    frame_size: samples_per_data_set * num_elements
+    metadata_pool: main_pool
+    gpu_input_buffer_0:
+        kotekan_buffer: standard
+        numa_node: 0
+
+lost_samples_buffer:
+    num_frames: baseband_buffer_depth
+    frame_size: samples_per_data_set
+    metadata_pool: main_pool
+    lost_samples_buffer_0:
+        kotekan_buffer: standard
+        numa_node: 0
+        # lost_samples_buffer_1:
+        # lostkotekan_buffer: standard
+        # lostnuma_node: 0
+
+# Stages
+
+# The core mapping here is setup for a 6 core CPU with 12 threads (vcores)
+# and setup to use the first 4 real cores (8 vcores)
+
+        # dpdk:
+        #     kotekan_stage: dpdkCore
+        #     # Format is index = lcore, value = cpu core
+        #     lcore_cpu_map: [0,1,2,3,4,5,6,7]
+        #     master_lcore_cpu: 1
+        #     fpga_packet_size: 4680
+        #     samples_per_packet: 2
+        #     alignment: samples_per_data_set * 100
+        #     # Format is index = lcore, value = array of port IDs
+        #     # so [[0,1],[2,3]] maps lcore 0 to service ports 0 and 1,
+        #     # and lcore 1 to service ports 2 and 3.
+        #     lcore_port_map:
+        #         - [0,1,2,3,4,5,6,7]
+        #           # One handler must be given per (CL:10Gb ethernet??) port on the system.
+        #     handlers:
+        #         - dpdk_handler: iceBoardStandard
+        #           out_buf: gpu_input_buffer_0
+        #           lost_samples_buf: lost_samples_buffer_0
+        #           # - dpdk_handler: iceBoardStandard
+        #           # - out_buf: gpu_input_buffer_1
+        #           # - lost_samples_buf: lost_samples_buffer_1
+        # 
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+        #         - dpdk_handler: none
+
+# Calvin: I commented out the above DPDK stage and added gen_data.
+gen_data:
+    type: random
+    value: 153
+    gen_data_0:
+        kotekan_stage: testDataGen
+        stream_id: 1
+        network_out_buf: gpu_input_buffer_0
+        out_buf: gpu_input_buffer_0
+        lost_samples_buf: lost_samples_buffer_0
+
+    #zero_samples:
+    #    kotekan_stage: zeroSamples
+    #    out_buf: gpu_input_buffer
+    #    lost_samples_buf: lost_samples_buffer
+    #    zero_value: 0
+
+baseband:
+    max_dump_samples: 40000
+    num_frames_buffer: baseband_buffer_depth - 10
+    base_dir: /home/masuilab/temp
+    write_throttle: 0
+    kotekan_stage: basebandReadout
+    in_buf: gpu_input_buffer_0
+
+#raw_file_write:
+#    kotekan_stage: nDiskFileWrite
+#    in_buf: adc_buffer
+#    disk_base: /home/masuilab/cpu-record-config
+#    disk_set: E
+#    write_to_disk: true
+#    write_metadata_and_gains: false
