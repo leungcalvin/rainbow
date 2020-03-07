@@ -1,10 +1,7 @@
 ##########################################
 #
-# cpu_record.yaml
+# gbo_multifreq_multistream.yaml
 #
-# A config which allows for the recording of one
-# stream of testDataGen, instead of 
-# ADC data from ICEBoards (modified from adc_record.yaml)
 #
 # Author: Calvin Leung
 ##########################################
@@ -15,12 +12,12 @@ type: config
 # Note DEBUG and DEBUG2 require a build with (-DCMAKE_BUILD_TYPE=Debug)
 log_level: DEBUG
 
-buffer_depth: 30 # keep at least N-5 frames in buffer before overwriting old data
-baseband_buffer_depth: 30 # 
+buffer_depth: 10 # keep at least N-5 frames in buffer before overwriting old data
+baseband_buffer_depth: 10 # 
 samples_per_data_set: 65536 # keep at 65536
-num_elements: 256 #correlator inputs; change back to 2048
-num_local_freq: 8
-base_dir: /home/masuilab/tmp
+num_elements: 16 #correlator inputs; change back to 2048
+num_local_freq: 128
+base_dir: '/home/masuilab/temp'
 # block_size: 2
 
 # OPTION 1: all 16 streams, 1 stream/lcore
@@ -154,7 +151,7 @@ lost_samples_buffers:
 
 dpdk:
     kotekan_stage: dpdkCore
-    num_mem_channels: 6
+    num_mem_channels: 4
     samples_per_packet: 2
     fpga_packet_size: 4680 #2376 * samples_per_packet
     alignment: samples_per_data_set * num_local_freq 
@@ -170,7 +167,7 @@ dpdk:
     # lcore_cpu_map: [4,5,6,7,8,9,10,11,0] # trial
     # cpu_affinity: [0,1,2,3]
     # OPTION 3: 1 stream/lcore, last  8 streams
-    # lcore_cpu_map: [0,1,2,3,8,9,10,11,4] 
+    # lcore_cp_map: [0,1,2,3,8,9,10,11,4] 
     # master_lcore_cpu: 4
     # OPTION 4: 2 streams/lcore
     # lcore_cpu_map: [0,8,1,9,2,10,3,11] #[0,12,1,13,2,14,3,15]
@@ -182,33 +179,33 @@ dpdk:
     # and lcore 1 to service ports 2 and 3.
     # # OPTION 1: 
     lcore_port_map: # 1 stream/lcore, 16 streams
-         - [0]
-         - [1]
-         - [2]
-         - [3]
-         - [4]
-         - [5]
-         - [6]
-         - [7]
-         - [8]
-         - [9]
-         - [10]
-         - [11]
-         - [12]
-         - [13]
-         - [14]
-         - [15]
+        - [0]
+        - [1]
+        - [2]
+        - [3]
+        - [4]
+        - [5]
+        - [6]
+        - [7]
+        - [8]
+        - [9]
+        - [10]
+        - [11]
+        - [12]
+        - [13]
+        - [14]
+        - [15]
     # OPTION 2: 1 stream/lcore, first 8 streams
-    # lcore_port_map: #1 stream/lcore, first 8 streams
-    #     - [0]
-    #     - [1]
-    #     - [2]
-    #     - [3]
-    #     - [4]
-    #     - [5]
-    #     - [6]
-    #     - [7]
-    #     - [8,9,10,11,12,13,14,15]
+    #lcore_port_map: #1 stream/lcore, first 8 streams
+    #    - [0]
+    #    - [1]
+    #    - [2]
+    #    - [3]
+    #    - [4]
+    #    - [5]
+    #    - [6]
+    #    - [7]
+    #    - [8,9,10,11,12,13,14,15]
     # lcore_port_map: # 1 stream/lcore,last 8 streams
     #     - [0,1,2,3,4,5,6,7]
     #     - [8]
@@ -231,14 +228,6 @@ dpdk:
     # One handler must be given per port on the system.
     # 0-7th: Second ICEBoard, 8-15th: First ICEBoard.
     handlers:
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
-        #    - dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_0
           lost_samples_buf: lost_samples_buffer_0
@@ -263,10 +252,6 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_7
           lost_samples_buf: lost_samples_buffer_7
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_8
           lost_samples_buf: lost_samples_buffer_8
@@ -279,11 +264,9 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_11
           lost_samples_buf: lost_samples_buffer_11
-        #- dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_12
           lost_samples_buf: lost_samples_buffer_12
-          #- dpdk_handler: none
         - dpdk_handler: iceBoardStandard 
           out_buf: gpu_input_buffer_13
           lost_samples_buf: lost_samples_buffer_13
@@ -380,7 +363,6 @@ zero_samples:
 baseband:
     max_dump_samples: 400000
     num_frames_buffer: baseband_buffer_depth - 4
-    base_dir: /home/masuilab/cpu-record-config/
     write_throttle: 0
     baseband_0:
         kotekan_stage: basebandReadout
@@ -406,39 +388,27 @@ baseband:
     baseband_7:
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_7
-        #     baseband_8:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_8
-        #     baseband_9:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_9
-        #     baseband_10:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_10
-        #     baseband_11:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_11
-            #    baseband_12:
-            #    basekotekan_stage: basebandReadout
-            #    basein_buf: gpu_input_buffer_12
-            #baseband_13:
-            #basekotekan_stage: basebandReadout
-            #basein_buf: gpu_input_buffer_13
-            # baseband_14:
-            #     kotekan_stage: basebandReadout
-            #     in_buf: gpu_input_buffer_14
-            #        baseband_15:
-            #            kotekan_stage: basebandReadout
-            #            in_buf: gpu_input_buffer_15
-
-        # hex_dump:
-        #     kotekan_stage: hexDump
-        #     buf: gpu_input_buffer_0
-
-#raw_file_write:
-#    kotekan_stage: nDiskFileWrite
-#    in_buf: adc_buffer
-#    disk_base: /home/masuilab/cpu-record-config
-#    disk_set: E
-#    write_to_disk: true
-#    write_metadata_and_gains: false
+    baseband_8:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_8
+    baseband_9:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_9
+    baseband_10:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_10
+    baseband_11:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_11
+    baseband_12:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_12
+    baseband_13:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_13
+    baseband_14:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_14
+    baseband_15:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_15
