@@ -1,9 +1,9 @@
 ##########################################
 #
-# cpu_record_multifreq.yaml
+# cpu_record.yaml
 #
 # A config which allows for the recording of one
-# stream consisting of 8 frequencies of testDataGen, instead of 1 frequency
+# stream of testDataGen, instead of 
 # ADC data from ICEBoards (modified from adc_record.yaml)
 #
 # Author: Calvin Leung
@@ -18,16 +18,15 @@ log_level: DEBUG
 # Note that for ADC mode the "samples" variable
 # doesn't really make sense here.  Since there are
 # 2048 ADC samples in the 2.56 us the other modes consider to be a "sample"
-samples_per_data_set: 400000
+samples_per_data_set: 65536
 buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
 num_elements: 256 #correlator inputs; change back to 2048
-base_dir: /home/masuilab/tmp/
+num_local_freq: 8 # number of frequencies PER STREAM. 8 for new pathfinder, 1 for current CHIME
 block_size: 2 
 baseband_buffer_depth: 50 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
 cpu_affinity: [2,3,4,5,6,7]
 #num_disks: 10
-#instrument_name: pathfinder
-num_local_freq: 8 # number of frequencies PER STREAM. 8 for new pathfinder, 1 for current CHIME
+#instrument_name: chime
 
 # Pool
 main_pool:
@@ -37,14 +36,11 @@ main_pool:
 # Buffers
 gpu_input_buffers:
     num_frames: baseband_buffer_depth
-    frame_size: samples_per_data_set * num_elements * num_local_freq
+    frame_size: samples_per_data_set * num_elements
     metadata_pool: main_pool
     gpu_input_buffer_0:
         kotekan_buffer: standard
         numa_node: 0
-        # gpu_input_buffer_1:
-        # gpu_kotekan_buffer: standard
-        # gpu_numa_node: 0
 
 lost_samples_buffer:
     num_frames: baseband_buffer_depth
@@ -102,14 +98,14 @@ lost_samples_buffer:
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 gen_data:
-    type: const
-    value: 1337
+    type: random
+    value: 153
     gen_data_0:
         kotekan_stage: testDataGen
+        stream_id: 1
         network_out_buf: gpu_input_buffer_0
         out_buf: gpu_input_buffer_0
         lost_samples_buf: lost_samples_buffer_0
-        stream_id: 2
 
     #zero_samples:
     #    kotekan_stage: zeroSamples
@@ -118,9 +114,9 @@ gen_data:
     #    zero_value: 0
 
 baseband:
-    max_dump_samples: 400000
+    max_dump_samples: 40000
     num_frames_buffer: baseband_buffer_depth - 10
-    base_dir: /home/masuilab/cpu-record-config/
+    base_dir: /home/masuilab/temp
     write_throttle: 0
     kotekan_stage: basebandReadout
     in_buf: gpu_input_buffer_0
