@@ -20,7 +20,7 @@ samples_per_data_set: 65536 # keep at 65536
 buffer_depth: 10 # keep at least N-10 frames in buffer before overwriting old data
 num_elements: 2048 #correlator inputs; change back to 2048
 num_local_freq: 8
-base_dir: /home/masuilab/tmp
+base_dir: /home/masuilab/temp
 block_size: 2 
 baseband_buffer_depth: 200 # 10 frames per 1% of CPU (1x Intel Xeon 4116)
 cpu_affinity: [4,5,6,7]
@@ -151,7 +151,7 @@ zero_samples:
 baseband:
     max_dump_samples: 400000
     num_frames_buffer: baseband_buffer_depth - 10
-    base_dir: /home/masuilab/cpu-record-config
+    base_dir: /home/masuilab/temp
     write_throttle: 0
     kotekan_stage: basebandReadout
     in_buf: gpu_input_buffer
