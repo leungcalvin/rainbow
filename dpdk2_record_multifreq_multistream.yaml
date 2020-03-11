@@ -268,7 +268,7 @@ dpdk:
     # so [[0,1],[2,3]] maps lcore 0 to service ports 0 and 1,
     # and lcore 1 to service ports 2 and 3.
     # # OPTION 1: 
-    lcore_port_map: # 1 stream/lcore, 16 streams
+    lcore_port_map: # 1 stream/lcore, 32 streams
         - [0]
         - [1]
         - [2]
