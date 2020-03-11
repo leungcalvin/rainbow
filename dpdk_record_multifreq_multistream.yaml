@@ -20,7 +20,7 @@ baseband_buffer_depth: 30 #
 samples_per_data_set: 65536 # keep at 65536
 num_elements: 256 #correlator inputs; change back to 2048
 num_local_freq: 8
-base_dir: /home/masuilab/tmp
+base_dir: /home/masuilab/temp
 # block_size: 2
 
 # OPTION 1: all 16 streams, 1 stream/lcore
@@ -263,10 +263,6 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_7
           lost_samples_buf: lost_samples_buffer_7
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_8
           lost_samples_buf: lost_samples_buffer_8
@@ -279,11 +275,9 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_11
           lost_samples_buf: lost_samples_buffer_11
-        #- dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_12
           lost_samples_buf: lost_samples_buffer_12
-          #- dpdk_handler: none
         - dpdk_handler: iceBoardStandard 
           out_buf: gpu_input_buffer_13
           lost_samples_buf: lost_samples_buffer_13
@@ -293,12 +287,6 @@ dpdk:
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_15
           lost_samples_buf: lost_samples_buffer_15
-          #- dpdk_handler: none
-          #- dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
-          #         - dpdk_handler: none
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 # gen_data:
@@ -380,7 +368,7 @@ zero_samples:
 baseband:
     max_dump_samples: 400000
     num_frames_buffer: baseband_buffer_depth - 4
-    base_dir: /home/masuilab/cpu-record-config/
+    base_dir: /home/masuilab/temp/
     write_throttle: 0
     baseband_0:
         kotekan_stage: basebandReadout
@@ -406,30 +394,30 @@ baseband:
     baseband_7:
         kotekan_stage: basebandReadout
         in_buf: gpu_input_buffer_7
-        #     baseband_8:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_8
-        #     baseband_9:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_9
-        #     baseband_10:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_10
-        #     baseband_11:
-        #         kotekan_stage: basebandReadout
-        #         in_buf: gpu_input_buffer_11
-            #    baseband_12:
-            #    basekotekan_stage: basebandReadout
-            #    basein_buf: gpu_input_buffer_12
-            #baseband_13:
-            #basekotekan_stage: basebandReadout
-            #basein_buf: gpu_input_buffer_13
-            # baseband_14:
-            #     kotekan_stage: basebandReadout
-            #     in_buf: gpu_input_buffer_14
-            #        baseband_15:
-            #            kotekan_stage: basebandReadout
-            #            in_buf: gpu_input_buffer_15
+    baseband_8:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_8
+    baseband_9:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_9
+    baseband_10:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_10
+    baseband_11:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_11
+    baseband_12:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_12
+    baseband_13:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_13
+    baseband_14:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_14
+    baseband_15:
+        kotekan_stage: basebandReadout
+        in_buf: gpu_input_buffer_15
 
         # hex_dump:
         #     kotekan_stage: hexDump
