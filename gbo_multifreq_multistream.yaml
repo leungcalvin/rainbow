@@ -13,9 +13,9 @@ type: config
 log_level: DEBUG
 
 buffer_depth: 10 # keep at least N-5 frames in buffer before overwriting old data
-baseband_buffer_depth: 10 # 
+baseband_buffer_depth: 40 # 
 samples_per_data_set: 65536 # keep at 65536
-num_elements: 16 #correlator inputs; change back to 2048
+num_elements: 16 
 num_local_freq: 128
 base_dir: '/home/masuilab/temp'
 # block_size: 2
