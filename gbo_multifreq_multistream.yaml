@@ -35,7 +35,7 @@ instrument_name: lab_test
 # Pool
 main_pool:
     kotekan_metadata_pool: chimeMetadata
-    num_metadata_objects: 16 * buffer_depth + 9 * baseband_buffer_depth
+    num_metadata_objects: 33 * baseband_buffer_depth
 
 # Buffers
 gpu_input_buffers:
@@ -364,51 +364,55 @@ baseband:
     max_dump_samples: 400000
     num_frames_buffer: baseband_buffer_depth - 4
     write_throttle: 0
-    baseband_0:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_0
-    baseband_1:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_1
-    baseband_2:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_2
-    baseband_3:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_3
-    baseband_4:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_4
-    baseband_5:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_5
-    baseband_6: 
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_6
-    baseband_7:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_7
-    baseband_8:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_8
-    baseband_9:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_9
-    baseband_10:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_10
-    baseband_11:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_11
-    baseband_12:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_12
-    baseband_13:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_13
-    baseband_14:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_14
-    baseband_15:
-        kotekan_stage: basebandReadout
-        in_buf: gpu_input_buffer_15
+    first_board:
+        board_id: 0
+        baseband_0:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_0
+        baseband_1:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_1
+        baseband_2:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_2
+        baseband_3:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_3
+        baseband_4:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_4
+        baseband_5:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_5
+        baseband_6: 
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_6
+        baseband_7:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_7
+    second_board:
+        board_id: 1
+        baseband_8:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_8
+        baseband_9:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_9
+        baseband_10:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_10
+        baseband_11:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_11
+        baseband_12:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_12
+        baseband_13:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_13
+        baseband_14:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_14
+        baseband_15:
+            kotekan_stage: basebandReadout
+            in_buf: gpu_input_buffer_15
