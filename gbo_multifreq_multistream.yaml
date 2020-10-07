@@ -146,7 +146,7 @@ lost_samples_buffers:
 
 # Stages
 
-# The core mapping here is setup for a 6 core CPU with 12 threads (vcores)
+# The core mapping (lcore_cpu_map, lcore_port_map) here is set up for a 12 core CPU with 24 threads (vcores)
 # and setup to use the first 4 real cores (8 vcores)
 
 dpdk:
