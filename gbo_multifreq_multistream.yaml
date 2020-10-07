@@ -17,7 +17,7 @@ baseband_buffer_depth: 40 #
 samples_per_data_set: 65536 # keep at 65536
 num_elements: 16 
 num_local_freq: 128
-base_dir: '/home/masuilab/temp'
+base_dir: '/home/masuilab/tone_baseband'
 # block_size: 2
 
 # OPTION 1: all 16 streams, 1 stream/lcore
@@ -30,7 +30,7 @@ cpu_affinity: [8,9,10,11,20,21,22,23]
 # OPTION 4: 2 streams/lcore
 # cpu_affinity: [4, 5, 6, 7, 8, 9, 10, 11, 16, 17, 18, 19, 20,21,22,23] #[4,5,6,7]
 #num_disks: 10
-instrument_name: lab_test
+instrument_name: tone
 
 # Pool
 main_pool:
