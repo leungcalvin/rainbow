@@ -235,14 +235,6 @@ dpdk:
     # One handler must be given per port on the system.
     # 0-7th: Second ICEBoard, 8-15th: First ICEBoard.
     handlers:
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
-        - dpdk_handler: none
         - dpdk_handler: iceBoardStandard
           out_buf: gpu_input_buffer_0
           lost_samples_buf: lost_samples_buffer_0
@@ -291,7 +283,14 @@ dpdk:
 #        - dpdk_handler: iceBoardStandard
 #          out_buf: gpu_input_buffer_15
 #          lost_samples_buf: lost_samples_buffer_15
-
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
+          - dpdk_handler: none
 
 # Calvin: I commented out the above DPDK stage and added gen_data.
 # gen_data:
